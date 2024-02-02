@@ -46,8 +46,8 @@ function changeSelectedDot(){
 }
 function changeTagLine(){
 	let imgText = document.querySelector("#banner p")
-	console.log("Valeur de counter: "+counter)
-	console.log(slides[counter].tagLine)
+	//console.log("Valeur de counter: "+counter)
+	//console.log(slides[counter].tagLine)
 	imgText.innerHTML=slides[counter].tagLine
 
 }
@@ -82,7 +82,7 @@ function lancerJeu() {
 	//affichage des dots en parti base 
 
 
-	let myInterval = setInterval(slideShow, 1000);
+	let myInterval = setInterval(slideShow, 4000);
 	next.addEventListener("click",()=>{
 		clearInterval(myInterval)
 		counter++
