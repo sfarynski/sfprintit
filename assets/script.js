@@ -18,7 +18,11 @@ const slides = [
 ]
 
 
-let dotline = `<a class="dot" href="#"></a><br/>`;
+let dotline = `<a class="dot" href="#"></a><br/>`
+
+let counter=0
+let Slide=document.querySelector(".banner-img")
+//let Dots = document.querySelectorAll(".dots .dot")
 
 function addDotLine(){
 	let dots = document.querySelector(".dots")
@@ -31,45 +35,77 @@ function addAllDots(){
 	}
 }
 
-function changeSelectedDot(dots){
-	for (let i=0;i<dots.length;i++){
-		dots[i].classList.remove("dot_selected")
+function changeSelectedDot(){
+	let allDots = document.querySelectorAll(".dots .dot")
+	for (let i=0;i<allDots.length;i++){
+		allDots[i].classList.remove("dot_selected")
 		if (i===counter){
-			dots[i].classList.add("dot_selected")
+			allDots[i].classList.add("dot_selected")
 		}
 	}
 }
-let counter=0
+function changeTagLine(){
+	let imgText = document.querySelector("#banner p")
+	console.log("Valeur de counter: "+counter)
+	console.log(slides[counter].tagLine)
+	imgText.innerHTML=slides[counter].tagLine
+
+}
 
 
-function lancerJeu() {
+function slideShow(){
+
+	counter++
+	if (counter>slides.length-1){
+		counter=0
+	}
+	Slide.setAttribute("src", "./assets/images/slideshow/"+slides[counter].image)
+	//console.log("Valeur de counter: "+counter)
+	changeSelectedDot()
+	changeTagLine()
+}
+
+function initDots(){
+	//ajouter tous les dots pour chaque photo du slide
 	addAllDots()
 	let dot1=document.querySelector(".dots .dot")
-	console.log(dot1)
+	//selectionner le premier dot pour la première photo
 	dot1.classList.add("dot_selected")
+}
+
+function lancerJeu() {
+	initDots()
 	let next = document.querySelector(".arrow_right")
 	let prev = document.querySelector(".arrow_left")
 	let imgSlide=document.querySelector(".banner-img")
-	let allDots = document.querySelectorAll(".dots .dot")
+	
+	//affichage des dots en parti base 
+
+
+	let myInterval = setInterval(slideShow, 1000);
 	next.addEventListener("click",()=>{
+		clearInterval(myInterval)
 		counter++
 		if (counter>slides.length-1){
 			counter=0
 		}
 		imgSlide.setAttribute("src", "./assets/images/slideshow/"+slides[counter].image)
 		//console.log("Valeur de counter: "+counter)
-		changeSelectedDot(allDots)
+		changeSelectedDot()
+		changeTagLine()
 	})
 	prev.addEventListener("click",()=>{
+		clearInterval(myInterval)
 		counter--
 		if (counter<0){
 			counter=slides.length-1
 		}
 		imgSlide.setAttribute("src", "./assets/images/slideshow/"+slides[counter].image)
 		//console.log("Valeur de counter: "+counter)
-		changeSelectedDot(allDots)
+		changeSelectedDot()
+		changeTagLine()
 		
 	})
-
+	
 }
 lancerJeu()
